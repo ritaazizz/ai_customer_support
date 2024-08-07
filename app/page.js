@@ -14,7 +14,7 @@ export default function Home() {
   const sendMessage = async () => {
 
     setText('')
-    setMessages((messages) => [ ...messages, { role: 'user', content: text } ])
+    setMessages((messages) => [ ...messages, { role: 'user', content: text }, { role: 'assistant', content: '' } ])
 
     // console.log('Payload:', JSON.stringify({ role: 'user', content: text }));
     const response = await fetch('/api/chat', {
@@ -23,16 +23,32 @@ export default function Home() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ role: 'user', content: text })
+    }).then(async (res) => {
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+
+      let result = ''
+      return reader.read().then(function processText({ done, value }) {
+        if (done) {
+          return result
+        }
+        const text = decoder.decode(value || new Int8Array(), { stream: true })
+        setMessages((messages) => {
+          let lastMessage = messages[messages.length - 1]
+          let otherMessages = messages.slice(0, messages.length - 1)
+          return [
+            ...otherMessages,
+            {
+              ...lastMessage,
+              content: lastMessage.content + text,
+              role: 'assistant'
+            }
+          ]
+        })
+        return reader.read().then(processText)
+      })
     })
 
-    // if (!response.ok) {
-    //   // Log the status and status text for debugging
-    //   console.error(`Error: ${response.status} ${response.statusText}`);
-    //   return;
-    // }
-    
-    const data = await response.json()        
-    setMessages((messages) => [ ...messages, { role: 'assistant', content: data.message } ])
   }
 
   return (
@@ -46,7 +62,7 @@ export default function Home() {
     >
       
       <Stack directon={'column'} width='600px' height='700px' border='1px solid black' justifyContent='flex-end' p={2} gap={2}>
-        <Stack directon={'column'} spacing={2} alignItems={'flex-start'} flexGrow={1} overflow={'auto'} maxHeight={'100%'} >
+        <Stack directon={'column'} spacing={2} flexGrow={1} overflow={'auto'} maxHeight={'100%'} >
           {
             messages.map((message, index) => (
               <Box
