@@ -9,11 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock": "^3.624.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.624.0",
+    "@aws-sdk/client-sagemaker-runtime": "^3.624.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^5.16.6",
+    "langchain": "^0.2.13",
     "next": "14.2.5",
     "openai": "^4.54.0",
+    "pdf-parse": "^1.1.1",
     "react": "^18",
     "react-dom": "^18"
   },
