@@ -1,5 +1,4 @@
 "use client";
-// bew branch test
 
 import { Box, Button, TextField, Stack } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
@@ -123,6 +122,11 @@ export default function Home() {
             fullWidth
             value={text}
             onChange={(event) => setText(event.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                sendMessage();
+              }
+            }}
           />
           <Button variant="contained" size="medium" onClick={sendMessage}>
             Send
