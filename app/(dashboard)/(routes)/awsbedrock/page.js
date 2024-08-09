@@ -1,7 +1,9 @@
 'use client';
 
 import { Box, Button, TextField, Stack } from '@mui/material';
+import { Code } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import Heading from '@/components/Heading';
 
 export default function Home() {
   const [messages, setMessages] = useState([
@@ -78,11 +80,19 @@ export default function Home() {
       alignItems={'center'}
       justifyContent={'center'}
     >
+      <Heading
+        title="Code Generation"
+        description="Generate code using descriptive text"
+        icon={Code}
+        iconColor="text-green-700"
+        bgColor="bg-green-700/10"
+      />
       <Stack
         direction={'column'}
         width="600px"
         height="700px"
         border="1px solid black"
+        borderRadius={4}
         justifyContent="flex-end"
         p={2}
         gap={2}
