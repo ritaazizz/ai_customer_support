@@ -4,6 +4,7 @@ import { ArrowRight, MessageSquare, ImageIcon, Code } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { UserButton } from '@clerk/nextjs';
 
 const tools = [
   {
@@ -40,7 +41,9 @@ const DashboardPage = () => {
         <p className="text-muted-foreground font-light text-sm md:text-lg text-center">
           Chat with the smartest AI - Experience the power of AI
         </p>
+        <UserButton className="flex flex-end" afterSignOutUrl="/" />
       </div>
+
       <div className="px-4 md:px-20 lg:px-32 space-y-4">
         {tools.map((tool) => (
           <Card
