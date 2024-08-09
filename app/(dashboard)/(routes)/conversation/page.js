@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import { Box, Button, TextField, Stack } from "@mui/material";
-import { useState, useEffect, useRef } from "react";
+import { Box, Button, TextField, Stack } from '@mui/material';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Home() {
   const [messages, setMessages] = useState([
     {
-      role: "assistant",
+      role: 'assistant',
       content:
-        "Hi. I am the Headstarter virtual assistant. How can I help you today?",
+        'Hi. I am the Headstarter virtual assistant. How can I help you today?',
     },
   ]);
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -25,25 +25,25 @@ export default function Home() {
   }, [messages]);
 
   const sendMessage = async () => {
-    setText("");
+    setText('');
     setMessages((messages) => [
       ...messages,
-      { role: "user", content: text },
-      { role: "assistant", content: "" },
+      { role: 'user', content: text },
+      { role: 'assistant', content: '' },
     ]);
 
     // console.log('Payload:', JSON.stringify({ role: 'user', content: text }));
-    const response = await fetch("/api/chat", {
-      method: "POST",
+    const response = await fetch('/api/chat', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ role: "user", content: text }),
+      body: JSON.stringify({ role: 'user', content: text }),
     }).then(async (res) => {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
 
-      let result = "";
+      let result = '';
       return reader.read().then(function processText({ done, value }) {
         if (done) {
           return result;
@@ -57,7 +57,7 @@ export default function Home() {
             {
               ...lastMessage,
               content: lastMessage.content + text,
-              role: "assistant",
+              role: 'assistant',
             },
           ];
         });
@@ -68,15 +68,15 @@ export default function Home() {
 
   return (
     <Box
-      width={"100vw"}
-      height={"100vh"}
-      display={"flex"}
-      flexDirection={"column"}
-      alignItems={"center"}
-      justifyContent={"center"}
+      width={'100vw'}
+      height={'100vh'}
+      display={'flex'}
+      flexDirection={'column'}
+      alignItems={'center'}
+      justifyContent={'center'}
     >
       <Stack
-        directon={"column"}
+        directon={'column'}
         width="600px"
         height="700px"
         border="1px solid black"
@@ -85,27 +85,27 @@ export default function Home() {
         gap={2}
       >
         <Stack
-          directon={"column"}
+          directon={'column'}
           spacing={2}
           flexGrow={1}
-          overflow={"auto"}
-          maxHeight={"100%"}
+          overflow={'auto'}
+          maxHeight={'100%'}
         >
           {messages.map((message, index) => (
             <Box
               key={index}
-              display={"flex"}
+              display={'flex'}
               justifyContent={
-                message.role === "assistant" ? "flex-start" : "flex-end"
+                message.role === 'assistant' ? 'flex-start' : 'flex-end'
               }
             >
               <Box
                 bgcolor={
-                  message.role === "assistant"
-                    ? "primary.main"
-                    : "secondary.main"
+                  message.role === 'assistant'
+                    ? 'primary.main'
+                    : 'secondary.main'
                 }
-                color={"white"}
+                color={'white'}
                 borderRadius={11}
                 p={2}
               >
@@ -116,14 +116,14 @@ export default function Home() {
           <div ref={messagesEndRef} />
         </Stack>
 
-        <Stack flexDirection={"row"} gap={2}>
+        <Stack flexDirection={'row'} gap={2}>
           <TextField
             label="Message"
             fullWidth
             value={text}
             onChange={(event) => setText(event.target.value)}
             onKeyPress={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 sendMessage();
               }
             }}
