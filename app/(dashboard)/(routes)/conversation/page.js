@@ -2,6 +2,8 @@
 
 import { Box, Button, TextField, Stack } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
+import Heading from '@/components/Heading';
+import { MessageSquare } from 'lucide-react';
 
 export default function Home() {
   const [messages, setMessages] = useState([
@@ -75,17 +77,26 @@ export default function Home() {
       alignItems={'center'}
       justifyContent={'center'}
     >
+      <Heading
+        title="Conversation"
+        description="Our most advanced conversation model"
+        icon={MessageSquare}
+        iconColor="text-violet-500"
+        bgColor="bg-violet-500/10"
+      />
+
       <Stack
         directon={'column'}
         width="600px"
         height="700px"
         border="1px solid black"
+        borderRadius={4}
         justifyContent="flex-end"
         p={2}
         gap={2}
       >
         <Stack
-          directon={'column'}
+          direction={'column'}
           spacing={2}
           flexGrow={1}
           overflow={'auto'}
